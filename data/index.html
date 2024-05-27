@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!-- duotecno.be - Author: VJ -->
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="build/toastr.css" rel="stylesheet" type="text/css" />
+    <title>Duotecno - Home</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="dt_logo.png" class="logo">
+            <h1 class="page-title">Home</h1>
+        </div>
+        <div class="navbar">
+            <a href="/" class="navbar-item">Home</a>
+            <script>
+                if ("%METERMODE%" == "1") {
+                    document.write('<a href="pulseconfig" class="navbar-item">Configuration</a>');
+                }
+
+                if ("%METERMODE%" == "2") {
+                    document.write('<a href="mbusconfig" class="navbar-item">Configuration</a>');
+                }
+
+                if ("%METERMODE%" == "3") {
+                    document.write('<a href="digitalmeterconfig" class="navbar-item">Configuration</a>');
+                    document.write('<a href="triggers" class="navbar-item">Triggers</a>');
+                }
+            </script>
+            <a href="logout" class="navbar-item">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">Meter Mode</h2>
+            <p>Current Mode: <b>%METERMODETEXT%</b></p>
+
+            <script>
+                if ("%METERMODE%" == "0") {
+                    document.write('<a href="setmode?mode=1" onclick="return confirm(\'Are you sure to change the mode to Pulse?\')"><button class="button">Pulse</button></a> <a href="setmode?mode=2" onclick="return confirm(\'Are you sure to change the mode to M-Bus?\')"><button class="button">M-Bus</button></a> <a href="setmode?mode=3" onclick="return confirm(\'Are you sure to change the mode to Digital Meter?\')"><button class="button">Digital Meter</button></a>');
+                }
+            </script>
+
+            <p>
+                <b>Status</b>
+                <div class="ribbon">%STATUSLOG%</div><br><br>
+                <b>Version</b><br>
+                <span class="label light-blue margintop">%VERSION%</span>
+            </p>
+
+            <h2 class="card-title">Actions</h2>
+            <a href="reboot" onclick="return confirm('Are you sure to reboot the device?')"><button class="button">Reboot</button></a>
+            <a href="reset" onclick="return confirm('Are you sure to reset the device to factory default? You will have to reconnect to the Access Point.')"><button class="button">Factory Reset</button></a>
+
+            <h2 class="card-title">Update Login Password</h2>
+
+            <div class="input-container">
+                <label for="password" class="input-label">Password:</label>
+                <input type="password" id="password" name="password" class="input-field">
+            </div>
+
+            <div class="input-container">
+                <label for="passwordconfirm" class="input-label">Repeat Password:</label>
+                <input type="password" id="passwordconfirm" name="passwordconfirm" class="input-field">
+            </div>
+            
+            <button onclick="saveValues()" class="button centered-button">Save</button>
+        </div>
+    </div>
+
+    <script src="build/jquery.min.js"></script>
+    <script src="build/toastr.js"></script>
+
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        function saveValues() {
+            const password = document.getElementById('password').value;
+            const passwordConfirm = document.getElementById('passwordconfirm').value;
+
+            if (password.length < 8) {
+                toastr.warning('Password is too short!');
+                return;
+            }
+            
+            if (password.length > 30) {
+                toastr.warning('Password is too large!');
+                return;
+            }
+
+            if (password != passwordConfirm) {
+                toastr.warning('Password does not match!');
+                return;
+            }
+            
+            fetch('/updatelogin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: password, passwordconfirm: passwordConfirm})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok. Please try again.');
+                    return response.json();
+                } else {
+                    toastr.success('Saved successfully!');
+                    return;
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+                toastr.error('Error saving. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!-- duotecno.be - Author: VJ -->
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="build/toastr.css" rel="stylesheet" type="text/css" />
+    <title>Duotecno - M-Bus Configuration</title>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="logo-container">
+            <img src="dt_logo.png" class="logo">
+            <h1 class="page-title">M-Bus Configuration</h1>
+        </div>
+        <div class="navbar">
+            <a href="/" class="navbar-item">Home</a>
+            <a href="mbusconfig" class="navbar-item">Configuration</a>
+            <!--<a href="test" class="navbar-item">Test</a>-->
+            <a href="logout" class="navbar-item">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">M-Bus Configuration</h2>
+
+            <table class="active" id="table1">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Device Name</th>
+                        <th>Access Number</th>
+                        <th>Register</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Device  #1</td>
+                        <td><input type="text" class="small-column" oninput="this.value = this.value.replace(/[^0-9-]/g, '');" maxlength="3" placeholder="0" value="%MBUS_AN_1%"></td>
+                        <td><a href="mbusdeviceconfig?id=1"><button class="in-table-button">Edit</button></a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Device  #2</td>
+                        <td><input type="text" class="small-column" oninput="this.value = this.value.replace(/[^0-9-]/g, '');" maxlength="3" placeholder="0" value="%MBUS_AN_2%"></td>
+                        <td><a href="mbusdeviceconfig?id=2"><button class="in-table-button">Edit</button></a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Device  #3</td>
+                        <td><input type="text" class="small-column" oninput="this.value = this.value.replace(/[^0-9-]/g, '');" maxlength="3" placeholder="0" value="%MBUS_AN_3%"></td>
+                        <td><a href="mbusdeviceconfig?id=3"><button class="in-table-button">Edit</button></a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button onclick="saveValues(0)" class="button centered-button">Save</button>
+
+            <h2 class="card-title">Settings</h2>
+
+
+            <div class="input-container">
+                <label for="baudrate" class="input-label">Baudrate (M-Bus):</label>
+                <input type="text" id="baudrate" name="baudrate" class="input-field" value="%MBUSBAUDRATE%">
+            </div>
+
+            <div class="input-container">
+                <label for="registerip" class="input-label">Master IP:</label>
+                <input type="text" id="registerip" name="registerip" class="input-field" value="%MASTERREGISTERIP%">
+            </div>
+
+            <p><h5 style="font-size: 0.5"><i>Example: 0.0.0.0</i></h1></p>
+
+            <button onclick="saveValues(1)" class="button centered-button">Save</button>
+
+        </div>
+
+    </div>
+    
+    <script src="build/jquery.min.js"></script>
+    <script src="build/toastr.js"></script>
+
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        function saveValues(typeAction) {
+            jsonBody = "";
+            
+            if (typeAction == 0) {
+                const inputFields = document.querySelectorAll('input[type="text"]');
+                const values = [];
+                inputFields.forEach(input => {
+                    values.push(input.value);
+                });
+
+                jsonBody = JSON.stringify({id: typeAction, values: values});
+            } else if (typeAction == 1) {
+                const registerInput = document.getElementById('registerip').value;
+
+                jsonBody = JSON.stringify({id: typeAction, value: registerInput});
+            } else {
+                return;
+            }
+
+            // Send POST request with the values
+            fetch('/registermbus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok. Please try again.');
+                    return response.json();
+                } else {
+                    //alert("Saved successfully!");
+                    toastr.success('Saved successfully!');
+                    return;
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+                toastr.error('Error saving. Please try again.');
+            });
+        }
+
+        let tables; // Declare tables variable outside the event listener
+        let currentTableIndex = 0;
+        tables = document.querySelectorAll('table'); // Assign tables here
+        
+        //console.log("Tables:", tables);
+
+        function showTable(index) {
+            for (let i = 0; i < tables.length; i++) {
+                if (i === index) {
+                    tables[i].style.display = 'table';
+                } else {
+                    tables[i].style.display = 'none';
+                }
+            }
+
+            //document.getElementById('table-index').textContent = '(Page ' + (index + 1 + ')'); // Update table index display
+        }
+
+        showTable(currentTableIndex); // Show the initial table
+       
+    </script>
+</body>
+</html>

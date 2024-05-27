@@ -1,0 +1,278 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    height: 50px;
+}
+
+.logo {
+    width: 100%;
+    max-width: 50px;
+    max-height: 50px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.page-title {
+    font-size: 15px;
+    color: white;
+    margin: 0;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    height: 100%;
+}
+
+.navbar-item {
+    margin-left: 15px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-item:first-child {
+    margin-left: 0;
+}
+
+.navbar-item:hover {
+    text-decoration: underline;
+}
+
+.container {
+    width: 90%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 50%;
+}
+
+.card-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.card-title-left {
+    font-size: 20px;
+    margin-bottom: 10px;
+    position: relative;
+    text-align: left;
+}
+
+.card-title::after {
+    content: "";
+    display: block;
+    margin: 10px auto;
+    width: 80%;
+    height: 1px;
+    background-color: black;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.input-container-left {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-bottom: 20px;
+}
+
+.input-label {
+    margin-right: 10px;
+}
+
+.input-field {
+    padding: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.centered-button {
+    margin-top: 10px;
+}
+
+.in-table-button {
+    padding: 3px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.card-pair {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.card-pair .card {
+    flex: 1;
+}
+
+.card-pair .card:first-child {
+    margin-right: 10px;
+}
+
+.card-pair .card:last-child {
+    margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .card-pair {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+.input-box {
+    width: 75%;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+    overflow: auto;
+}
+
+.ribbon {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+table {
+    width: 75%;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin: 0 auto;
+    background-color: white;
+
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden; 
+    /*font-family: 'Montserrat';*/
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.small-column {
+    width: 50px;
+}
+
+table {
+    display: none;
+}
+
+table.active {
+    display: block;
+}
+
+.table-index-container {
+    margin-top: 10px;
+}
+
+.label {
+    display: inline-block;
+    background-color: #62cf40;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.label.green {
+    background-color: #62cf40;
+    color: #fff;
+}
+
+.label.grey {
+    background-color: #919191;
+    color: #fff;
+}
+
+.label.light-blue {
+    background-color: #2cd2d8;
+    color: #fff;
+}
+
+.label.light-blue.margintop {
+    margin-top: 5px;
+}
+
+.label.dark-yellow {
+    background-color: #c4a400;
+    color: #fff;
+}
+
+.label.red {
+    background-color: #bd0000;
+    color: #fff;
+}
+
+.custom-width {
+    width: 100px; /* Set the height of header cells in this row to make it taller */
+}

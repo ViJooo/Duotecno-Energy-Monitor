@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- duotecno.be - Author: Vidar Jonckheere -->
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Duotecno - M-Bus Configuration</title>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="logo-container">
+            <img src="dt_logo.png" class="logo">
+            <h1 class="page-title">M-Bus Configuration</h1>
+        </div>
+        <div class="navbar">
+            <a href="/" class="navbar-item">Home</a>
+            <a href="mbusconfig" class="navbar-item">Configuration</a>
+            <a href="test" class="navbar-item">Test</a>
+            <a href="logout" class="navbar-item">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">M-Bus</h2>
+            <p>
+                Value 1: <b>%VALUE1%</b><br>
+                Value 2: <b>%VALUE2%</b><br>
+                Value 3: <b>%VALUE3%</b><br>
+                <br>
+            </p>
+
+            <h2 class="card-title">Registermap</h2>
+
+            <form action="/handlepulse" method="POST">
+                <div class="input-container">
+                    <label for="registerip" class="input-label">Master IP:</label>
+                    <input type="text" id="registerip" name="registerip" class="input-field" value="%MASTERREGISTERIP%">
+                </div>
+
+                <p><h5 style="font-size: 0.5"><i>Example: 0.0.0.0</i></h1></p>
+
+                <button type="submit" class="button centered-button">Save</button>
+            </form>
+
+        </div>
+
+        <!-- Pair of cards -->
+        <div class="card-pair">
+            <div class="card">
+                <h2 class="card-title-left">M-Bus Device #1</h2>
+                <p align="left">
+                    Value 1: <b>%VALUE1%</b><br>
+                    Value 2: <b>%VALUE2%</b><br>
+                    Value 3: <b>%VALUE3%</b><br>
+                    <br>
+                </p>
+                <a href="setpulse"><button class="button">Edit</button></a>
+            </div>
+            <div class="card">
+                <h2 class="card-title-left">M-Bus Device #2</h2>
+                <p align="left">
+                    Value 1: <b>%VALUE1%</b><br>
+                    Value 2: <b>%VALUE2%</b><br>
+                    Value 3: <b>%VALUE3%</b><br>
+                    <br>
+                </p>
+                <a href="setpulse"><button class="button">Edit</button></a>
+            </div>
+        </div>
+
+        <!-- Pair of cards -->
+        <div class="card-pair">
+            <div class="card">
+                <h2 class="card-title-left">M-Bus Device #3</h2>
+                <p align="left">
+                    Value 1: <b>%VALUE1%</b><br>
+                    Value 2: <b>%VALUE2%</b><br>
+                    Value 3: <b>%VALUE3%</b><br>
+                    <br>
+                </p>
+                <a href="setpulse"><button class="button">Edit</button></a>
+            </div>
+            <div class="card">
+                <h2 class="card-title-left">M-Bus Device #4</h2>
+                <p align="left">
+                    Value 1: <b>%VALUE1%</b><br>
+                    Value 2: <b>%VALUE2%</b><br>
+                    Value 3: <b>%VALUE3%</b><br>
+                    <br>
+                </p>
+                <a href="setpulse"><button class="button">Edit</button></a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

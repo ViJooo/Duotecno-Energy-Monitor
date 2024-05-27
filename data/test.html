@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- duotecno.be - Author: VJ -->
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Duotecno - Test</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="dt_logo.png" class="logo">
+            <h1 class="page-title">Test</h1>
+        </div>
+        <div class="navbar">
+            <a href="/" class="navbar-item">Home</a>
+            <script>
+                if ("%METERMODE%" == "1") {
+                    document.write('<a href="pulseconfig" class="navbar-item">Configuration</a>');
+                }
+
+                if ("%METERMODE%" == "2") {
+                    document.write('<a href="mbusconfig" class="navbar-item">Configuration</a>');
+                }
+
+                if ("%METERMODE%" == "3") {
+                    document.write('<a href="digitalmeterconfig" class="navbar-item">Configuration</a>');
+                }
+            </script>
+            <a href="test" class="navbar-item">Test</a>
+            <a href="logout" class="navbar-item">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">Send http request to registermap</h2>
+            <form action="/testsendhttp" method="POST">
+                <div class="input-container">
+                    <label for="registerip" class="input-label">Register IP:</label>
+                    <input type="text" id="registerip" name="registerip" class="input-field" value="http://192.168.40.5:8080">
+                </div>
+
+                <div class="input-container">
+                    <label for="registernumber" class="input-label">Register Number:</label>
+                    <input type="number" id="registernumber" name="registernumber" class="input-field" min="0" max="63">
+                </div>
+
+                <div class="input-container">
+                    <label for="registervalue" class="input-label">Register Value:</label>
+                    <input type="number" id="registervalue" name="registervalue" class="input-field" min="0" max="1000">
+                </div>
+
+                <button type="submit" class="button centered-button">Send</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

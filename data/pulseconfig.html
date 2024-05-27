@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- duotecno.be - Author: VJ -->
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="build/toastr.css" rel="stylesheet" type="text/css" />
+    <title>Duotecno - Pulse Configuration</title>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="logo-container">
+            <img src="dt_logo.png" class="logo">
+            <h1 class="page-title">Pulse Configuration</h1>
+        </div>
+        <div class="navbar">
+            <a href="/" class="navbar-item">Home</a>
+            <a href="pulseconfig" class="navbar-item">Configuration</a>
+            <a href="logout" class="navbar-item">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card second-card">
+            <h2 class="card-title">Pulse</h2>
+            <p>
+                Pulse Count: <b>%PULSECOUNT%</b>
+                <br>
+                <br>
+                Calculated value: <span class="label green">%CALCULATEDPULSE% %PULSEUNIT%</span>
+                <br>
+            </p>
+
+            <br>
+            
+            <h2 class="card-title">Configuration</h2>
+
+                <div class="input-container">
+                    <label for="setpulsecount" class="input-label">Set pulse offset:</label>
+                    <input type="number" id="setpulsecount" name="setpulsecount" class="input-field" placeholder="0" value="%PULSECOUNT%">
+                </div>
+
+                <div class="input-container">
+                    <label for="setconversion" class="input-label">Set meter conversion:</label>
+                    <input type="number" id="setconversion" name="setconversion" class="input-field" step="any" placeholder="0.001" value="%CURRENTCONVERSION%">
+                </div>
+                <p><h5 style="font-size: 0.5"><i>Example: 1 pulse equals 0,0001 kWh</i></h1></p>
+
+                <div class="input-container">
+                    <label for="pulseunit" class="input-label">Set unit:</label>
+                    <select id="pulseunit" name="pulseunit" class="input-field">
+                        <script>
+                            if ("%PULSEUNIT%" == "kWh") {
+                                document.write('<option selected="selected" value="kWh">kWh</option>');
+                            } else {
+                                document.write('<option value="kWh">kWh</option>');
+                            }
+
+                            if ("%PULSEUNIT%" == "kW") {
+                                document.write('<option selected="selected" value="kW">kW</option>');
+                            } else {
+                                document.write('<option value="kW">kW</option>');
+                            }
+
+                            if ("%PULSEUNIT%" == "L") {
+                                document.write('<option selected="selected" value="L">L</option>');
+                            } else {
+                                document.write('<option value="L">L</option>');
+                            }
+
+                            if ("%PULSEUNIT%" == "m3") {
+                                document.write('<option selected="selected" value="m3">m3</option>');
+                            } else {
+                                document.write('<option value="m3">m3</option>');
+                            }
+                        </script>
+                    </select>
+                </div>
+
+                <button onclick="saveValues(0)" class="button centered-button">Save</button>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Registermap</h2>
+            <div class="input-container">
+                <label for="registerip" class="input-label">Master IP:</label>
+                <input type="text" id="registerip" name="registerip" class="input-field" value="%MASTERREGISTERIP%">
+            </div>
+
+            <p><h5 style="font-size: 0.5"><i>Example: 0.0.0.0</i></h1></p>
+
+            <div class="input-container">
+                <label for="registernumber" class="input-label">Register Number:</label>
+                <input type="number" id="registernumber" name="registernumber" class="input-field" min="0" max="63" value="%PULSEREGISTERNUMBER%">
+            </div>
+
+            <p><h5 style="font-size: 0.5"><i>-1 = not used.</i></h5></p>
+
+            <button onclick="saveValues(1)" class="button centered-button">Save</button>
+        </div>
+    </div>
+    <script src="build/jquery.min.js"></script>
+    <script src="build/toastr.js"></script>
+
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        function saveValues(typeAction) {
+            jsonBody = "";
+
+            if (typeAction == 0) {
+                const pulseCount = document.getElementById('setpulsecount').value;
+                const pulseConversion = document.getElementById('setconversion').value;
+                const pulseUnit = document.getElementById('pulseunit').value;
+
+                jsonBody = JSON.stringify({id: typeAction, pulsecount: pulseCount, pulseconversion: pulseConversion, pulseunit: pulseUnit});
+            } else if (typeAction == 1) {
+                const masterIP = document.getElementById('registerip').value;
+                const registerNumber = document.getElementById('registernumber').value;
+
+                jsonBody = JSON.stringify({id: typeAction, masterip: masterIP, registernumber: registerNumber});
+            } else {
+                return;
+            }
+
+            // Send POST request with the values
+            fetch('/registerpulse', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok. Please try again.');
+                    return response.json();
+                } else {
+                    //alert("Saved successfully!");
+                    toastr.success('Saved successfully!');
+                    return;
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+                toastr.error('Error saving. Please try again.');
+            });
+        }
+
+        let tables; // Declare tables variable outside the event listener
+        let currentTableIndex = 0;
+        tables = document.querySelectorAll('table'); // Assign tables here
+        
+        //console.log("Tables:", tables);
+
+        function showTable(index) {
+            for (let i = 0; i < tables.length; i++) {
+                if (i === index) {
+                    tables[i].style.display = 'table';
+                } else {
+                    tables[i].style.display = 'none';
+                }
+            }
+
+            document.getElementById('table-index').textContent = '(Page ' + (index + 1 + ')'); // Update table index display
+        }
+
+        function nextTable() {
+            currentTableIndex++;
+            if (currentTableIndex >= tables.length) {
+                currentTableIndex = 0;
+            }
+            showTable(currentTableIndex);
+        }
+
+        function previousTable() {
+            currentTableIndex--;
+            if (currentTableIndex < 0) {
+                currentTableIndex = tables.length - 1;
+            }
+            showTable(currentTableIndex);
+        }
+
+        showTable(currentTableIndex); // Show the initial table
+       
+    </script>
+</body>
+
+</html>

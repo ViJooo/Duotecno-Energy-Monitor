@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!-- duotecno.be - Author: VJ -->
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="build/toastr.css" rel="stylesheet" type="text/css" />
+    <title>Duotecno - Triggers</title>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="logo-container">
+            <img src="dt_logo.png" class="logo">
+            <h1 class="page-title">Triggers</h1>
+        </div>
+        <div class="navbar">
+            <a href="/" class="navbar-item">Home</a>
+            <script>
+                if ("%METERMODE%" == "1") {
+                    document.write('<a href="pulseconfig" class="navbar-item">Configuration</a>');
+                }
+
+                if ("%METERMODE%" == "2") {
+                    document.write('<a href="mbusconfig" class="navbar-item">Configuration</a>');
+                }
+
+                if ("%METERMODE%" == "3") {
+                    document.write('<a href="digitalmeterconfig" class="navbar-item">Configuration</a>');
+                }
+            </script>
+            <a href="triggers" class="navbar-item">Triggers</a>
+            <!--<a href="test" class="navbar-item">Test</a>-->
+            <a href="logout" class="navbar-item">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">Triggers</h2>
+
+            <table class="active" id="table1">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Name</th>
+                        <th class="custom-width">Value (W)</th>
+                        <th>TON (ms)</th>
+                        <th>Trigger</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Current Consumption</td>
+                        <td>greater than</td>
+                        <td><input type="text" id="valueinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9.-]/g, '');" maxlength="10" placeholder="0" value="%P1_TRIGGER_1%"></td>
+                        <td><input type="text" id="timerinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="8" placeholder="0" value="%P1_TRIGGER_T_1%"></td>
+                        <td><input type="text" id="registerinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="0" value="%P1_TRIGGER_REG_1%"></td>
+                        <td>
+                            <script>
+                                if ("%P1_TRIGGER_STATUS_1%" == "1") {
+                                    document.write('<span class="label green">Activated</span>');
+                                } else {
+                                    document.write('<span class="label red">Deactivated</span>');
+                                }
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Current Consumption</td>
+                        <td>lower than</td>
+                        <td><input type="text" id="valueinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9.-]/g, '');" maxlength="10" placeholder="0" value="%P1_TRIGGER_2%"></td>
+                        <td><input type="text" id="timerinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="8" placeholder="0" value="%P1_TRIGGER_T_2%"></td>
+                        <td><input type="text" id="registerinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="0" value="%P1_TRIGGER_REG_2%"></td>
+                        <td>
+                            <script>
+                                if ("%P1_TRIGGER_STATUS_2%" == "1") {
+                                    document.write('<span class="label green">Activated</span>');
+                                } else {
+                                    document.write('<span class="label red">Deactivated</span>');
+                                }
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Current Injection</td>
+                        <td>greater than</td>
+                        <td><input type="text" id="valueinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9.-]/g, '');" maxlength="10" placeholder="0" value="%P1_TRIGGER_3%"></td>
+                        <td><input type="text" id="timerinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="8" placeholder="0" value="%P1_TRIGGER_T_3%"></td>
+                        <td><input type="text" id="registerinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="0" value="%P1_TRIGGER_REG_3%"></td>
+                        <td>
+                            <script>
+                                if ("%P1_TRIGGER_STATUS_3%" == "1") {
+                                    document.write('<span class="label green">Activated</span>');
+                                } else {
+                                    document.write('<span class="label red">Deactivated</span>');
+                                }
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Current Injection</td>
+                        <td>lower than</td>
+                        <td><input type="text" id="valueinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9.-]/g, '');" maxlength="10" placeholder="0" value="%P1_TRIGGER_4%"></td>
+                        <td><input type="text" id="timerinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="8" placeholder="0" value="%P1_TRIGGER_T_4%"></td>
+                        <td><input type="text" id="registerinput" class="small-column" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="2" placeholder="0" value="%P1_TRIGGER_REG_4%"></td>
+                        <td>
+                            <script>
+                                if ("%P1_TRIGGER_STATUS_4%" == "1") {
+                                    document.write('<span class="label green">Activated</span>');
+                                } else {
+                                    document.write('<span class="label red">Deactivated</span>');
+                                }
+                            </script>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button onclick="saveValues(0)" class="button centered-button">Save</button>
+
+            <p>
+                <h5 style="font-size: 0.5"><i>Value: -1 = not used.</i></h5>
+            </p>
+
+            <h2 class="card-title">Trigger map</h2>
+                <div class="input-container">
+                    <label for="triggerip" class="input-label">Master IP:</label>
+                    <input type="text1" id="triggerip" name="triggerip" class="input-field" value="%TRIGGERIP%">
+                </div>
+
+                <p>
+                    <h5 style="font-size: 0.5"><i>Example: 0.0.0.0</i></h5>
+                </p>
+
+                <button onclick="saveValues(1)" class="button centered-button">Save</button>
+        </div>
+
+    </div>
+
+    <script src="build/jquery.min.js"></script>
+    <script src="build/toastr.js"></script>
+
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        function saveValues(typeAction) {
+            jsonBody = "";
+
+            if (typeAction == 0) {
+                const inputFieldsValues = document.querySelectorAll('input[id="valueinput"]');
+                const inputFieldsTimers = document.querySelectorAll('input[id="timerinput"]');
+                const inputFieldsRegisters = document.querySelectorAll('input[id="registerinput"]');
+
+                const values = [];
+                inputFieldsValues.forEach(input => {
+                    values.push(input.value);
+                });
+
+                const timers = [];
+                inputFieldsTimers.forEach(input => {
+                    timers.push(input.value);
+                });
+
+                const registers = [];
+                inputFieldsRegisters.forEach(input => {
+                    registers.push(input.value);
+                });
+
+                /*
+                console.log("Values:", values);
+                console.log("JSON: ", JSON.stringify({ values: values }));
+
+                console.log("Values:", timers);
+                console.log("JSON: ", JSON.stringify({ timers: timers }));
+
+                console.log("Values:", registers);
+                console.log("JSON: ", JSON.stringify({ registers: registers }));
+                */
+               
+                jsonBody = JSON.stringify({id: typeAction, values: values, timers: timers, registers: registers});
+            } else if (typeAction == 1) {
+                const triggerInput = document.getElementById('triggerip').value;
+
+                jsonBody = JSON.stringify({id: typeAction, value: triggerInput});
+            } else {
+                return;
+            }
+
+            // Send POST request with the values
+            fetch('/registertrigger', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok. Please try again.');
+                    return response.json();
+                } else {
+                    toastr.success('Saved successfully!');
+                    return;
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+                toastr.error('Error saving. Please try again.');
+            });
+        }
+
+        let tables; // Declare tables variable outside the event listener
+        let currentTableIndex = 0;
+        tables = document.querySelectorAll('table'); // Assign tables here
+        
+        //console.log("Tables:", tables);
+
+        function showTable(index) {
+            for (let i = 0; i < tables.length; i++) {
+                if (i === index) {
+                    tables[i].style.display = 'table';
+                } else {
+                    tables[i].style.display = 'none';
+                }
+            }
+
+            //document.getElementById('table-index').textContent = '(Page ' + (index + 1 + ')'); // Update table index display
+        }
+
+        showTable(currentTableIndex); // Show the initial table
+       
+    </script>
+</body>
+</html>
